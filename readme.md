@@ -1,0 +1,8 @@
+# Kanban Board - Kalyane
+## 1. Functionalities
+
+In this assignment, I tried to put my maximum to create a system that works correctly and that I would use. The Kanban board is an individual space and therefore needs the registration of users and respectively login.
+After accessing the system, the user can enter an activity in any of the available states (ToDo, Doing, Done). To add an activity, a modal will appear and ask for the title and description. When adding the activity, the page reloads and shows that it has been entered. It is possible to modify the information of each task by clicking on each card. For reasons of ease, you just need to drag the card to its new state and the system automatically updates that activity. In the same modal, you can also choose to delete the activity.
+
+## 2. Tests
+For test development, I chose to analyze the content I want on each page as soon as I execute a request. Initially, I focused on whether the system works correctly with login, registration and logout. It is important to emphasize that I did not dedicate myself to encrypting passwords. Finally, I decided to test the main functionality of the system, the kanban board. Unfortunately, I found out the hard way that tests don't run in order, so I had to create an external function that could order the tests because I wanted to add an activity A, turn A into B, change the state of B, and delete B Exactly in this order. If I had more time, I could think of other features and tests.
