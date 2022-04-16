@@ -3820,8 +3820,8 @@ max_time(X) :- ask(max_time, X).
 max_calories(X) :- ask(max_calories, X).
 cuisine(X) :- ask(cuisine, X).
 diet(X) :- ask(diet, X).
-max_price(X) :- ask(max_price, X).
 dishType(X) :- ask(dishType, X).
+max_price(X) :- ask(max_price, X).
 
 %%%% Some useful functions %%%%
 
