@@ -7,7 +7,7 @@ recipe(639512,"Citrus Arugula Salad with Seared Scallops","https://spoonacular.c
 
 recipe(639512,"Citrus Arugula Salad with Seared Scallops","https://spoonacular.com/citrus-arugula-salad-with-seared-scallops-639512"):-search(type),max_time(Time),less_or_equal(45, Time),max_calories(Calories),less_or_equal(82, Calories),cuisine(Cuisine),member(Cuisine, ['none']),dishType(Dish),member(Dish, ['side dish', 'salad', 'none']),diet(Diet),member(Diet, ['dairyFree', 'glutenFree', 'none']),max_price(Price),less_or_equal(1.4519, Price).
 
-recipe(638071,"Chicken En Papillote With Basil and Cherry Tomatoes","https://spoonacular.com/chicken-en-papillote-with-basil-and-cherry-tomatoes-638071"):-search(ingredient),available_ingredients(List_ingredients),all_first_in_second(['skinless boneless chicken breast', 'salt and pepper', 'olive oil', 'onion', 'garlic clove', 'white wine', 'cherry tomatoes', 'basil', 'basil'], List_ingredients),max_time(Time),less_or_equal(45, Time),max_calories(Calories),less_or_equal(434, Calories),cuisine(Cuisine),member(Cuisine, ['none']),dishType(Dish),member(Dish, ['none']).
+recipe(638071,"Chicken En Papillote With Basil and Cherry Tomatoes","https://spoonacular.com/chicken-en-papillote-with-basil-and-cherry-tomatoes-638071"):-search(ingredient),available_ingredients(List_ingredients),all_first_in_second(['skinless boneless chicken breast', 'salt', 'pepper', 'olive oil', 'onion', 'garlic clove', 'white wine', 'cherry tomatoes', 'basil', 'basil'], List_ingredients),max_time(Time),less_or_equal(45, Time),max_calories(Calories),less_or_equal(434, Calories),cuisine(Cuisine),member(Cuisine, ['none']),dishType(Dish),member(Dish, ['none']).
 
 recipe(638071,"Chicken En Papillote With Basil and Cherry Tomatoes","https://spoonacular.com/chicken-en-papillote-with-basil-and-cherry-tomatoes-638071"):-search(type),max_time(Time),less_or_equal(45, Time),max_calories(Calories),less_or_equal(434, Calories),cuisine(Cuisine),member(Cuisine, ['none']),dishType(Dish),member(Dish, ['none']),diet(Diet),member(Diet, ['dairyFree', 'glutenFree', 'none']),max_price(Price),less_or_equal(2.6225, Price).
 
@@ -3820,13 +3820,13 @@ max_time(X) :- ask(max_time, X).
 max_calories(X) :- ask(max_calories, X).
 cuisine(X) :- ask(cuisine, X).
 diet(X) :- ask(diet, X).
-max_price(X) :- ask(max_price, X).
 dishType(X) :- ask(dishType, X).
+max_price(X) :- ask(max_price, X).
 
 %%%% Some useful functions %%%%
 
 less_or_equal(X,Y) :- X @=< Y.
-all_first_in_second(List1, List2) :- forall(member(Element,List1), member(Element,List2)).
+all_first_in_second(List1, List2) :- forall(member(Element,List2), member(Element,List1)).
 
 % Asking clauses taken from class: CS152 Session 21 - [12.2] Prolog Applications to AI - Expert Systems
 
