@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,  redirect, url_for
+from flask import Flask, render_template, request
 
 # taken from https://github.com/yuce/pyswip/issues/3
 # pyswip has a problem of threading when using flask
