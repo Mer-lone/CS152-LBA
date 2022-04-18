@@ -3825,10 +3825,14 @@ max_price(X) :- ask(max_price, X).
 
 %%%% Some useful functions %%%%
 
+% used to compare values like recipe price and the price you want to pay
 less_or_equal(X,Y) :- X @=< Y.
+
+% used to check if all elements on the first list is on the second 
+% example is checking if the recipe ingredients are on the available_ingredients
 all_first_in_second(List1, List2) :- forall(member(Element,List2), member(Element,List1)).
 
-% pages
+% pages according to each askable
 
 page(search, 'search.html').
 page(available_ingredients, 'available_ingredients.html').
@@ -3863,7 +3867,8 @@ known(yes, A, V2),
 V \== V2,
 !, fail.
 
+% instead of asking, it assert a new question to ask on the KB
 ask(A, V):-
 page(A, P),
-assertz(question(P)),
+assertz(question(P)), % the question has the page that the UI needs to go to get the answer
 !, fail.

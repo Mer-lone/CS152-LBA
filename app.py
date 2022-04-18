@@ -79,13 +79,23 @@ diets.sort()
 cuisines.sort()
 dishTypes.sort()
 
+
 def get_question():
+    """
+    This function does a query on the recipes based on the current state of the KB.
+    With the Prolog threading problem, it was not possible to use registerForeign
+    and so a new strategy was used with a new predicate called question that has a page.
+    It returns the first question on the KB. If no questions, return the results page
+    with the recipes as parameters. 
+    """
+    # remove all questions previously
     prolog.retractall("question(_)")
+    # query recipes
     recipes = []
     for soln in prolog.query("recipe(Id, Title, Url)"):
         recipe = {"id":soln["Id"], "title":soln["Title"].decode(), "url":soln["Url"].decode()}
         recipes.append(recipe)
-
+    # query questions
     questions = [s for s in prolog.query("question(P).", maxresult= 1)]
 
     if not questions:
@@ -98,15 +108,17 @@ def index():
 
 @app.route('/start')
 def start():
+    # when starting we remove any known askable
     prolog.retractall("known(_,_,_)")
 
     page, recipes = get_question()
-    print(page)
 
+    # all pages get the same parameters
     return render_template(page, recipes = recipes, ingredients = ingredients, diets = diets, cuisines = cuisines, dishtypes = dishTypes)
 
 @app.route('/store/<askable>/<value>', methods = ['GET'])
 def store(askable,value):
+    # when the user answers, we assert the new knowledge on the KB
     prolog.assertz("known(yes, " + askable + ", " + value + ")")
 
     page, recipes = get_question()
@@ -116,6 +128,7 @@ def store(askable,value):
 @app.route('/store/<type>', methods = ['POST'])
 def store_post(type):
     askable = request.form['askable']
+    # depending on the type of askable we get the value differently
     if type == "list":
         value_list = request.form.getlist('value[]')
         value = "["+", ".join(f"'{w}'" for w in value_list)+"]"
@@ -125,15 +138,12 @@ def store_post(type):
     else:
         value = request.form['value']
 
+    # assert new knowledge
     prolog.assertz("known(yes, " + askable + ", " + value + ")")
 
     page, recipes = get_question()
 
     return render_template(page, recipes = recipes, ingredients = ingredients, diets = diets, cuisines = cuisines, dishtypes = dishTypes)
-
-@app.route('/results', methods = ['POST'])
-def results():
-    return render_template('result_recipes.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
