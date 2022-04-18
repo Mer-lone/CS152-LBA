@@ -43,7 +43,7 @@
         <hr>
         <br>
         <div>
-            <h3 class="query">What is the Maximum amount of time you have to cook?</h3>
+            <h3 class="query">What is the Maximum amount of time you have to cook? (in minutes)</h3>
             <form method="POST" action="{{ url_for('store_post', type='normal') }}">
                 <input type="hidden" class="form-control" name="askable" value="max_time">
                 <input type="number" class="form-control" name="value">
