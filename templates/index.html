@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,23 +12,167 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
 
 </head>
+<style>
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;   
+}
+
+body {
+    background-color: #d1a3b3;
+    font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+   }
+
+h1 {
+  color: rgb(48, 2, 49);
+  text-align:justify;
+  margin: -5px 0 10px;
+  /* margin-left: 40px; */
+}
+
+.heading {
+    margin-left: 40px; 
+    font-size: 400%;
+    text-align: justify;
+    margin: -15px 0 0px;
+
+}
+
+.container {
+ width: 120%;
+ height: 85%;
+ background-color: primary-color;
+ position: relative;
+ display: grid;
+ grid-template-columns: 300px 600px;
+ border-radius: border-radius;
+ box-shadow: 0 15px 20px rgba(0, 0, 0, 0.356);
+
+}
+
+.btn {
+    display: block;
+       position:relative;
+       font-family: Arial, Helvetica, sans-serif;
+       font-size: 20px;
+       text-transform: uppercase;
+       text-decoration:wavy;
+       font-weight: bold;
+       color: #fff;
+       background-color: #530a60;
+   
+       bottom: 0;
+
+       padding: 12px 20px;
+       width: 200px;
+       text-align: center;
+       -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+       border-radius: 5px;
+       text-shadow: 1px 1px 4px rgba(102, 12, 122, 0.5);
+}
+
+
+.container_img {
+       margin-left: 20%;
+       width: 150%;
+       height: 70%;
+       display: flex;
+       float: left;
+       margin: 20% 200px 0px 20%;
+       justify-content: center;
+       
+   }
+   #wrapper {
+       margin-left:auto;
+       margin-right:auto;
+       width:960px;
+   }
+   
+   .container__text {
+    padding: 40px 40px 0;
+    width: 100%;
+    height: 100%;
+    justify-content: left;
+    display:block;
+    float: left ;   
+    margin: 20% 30px 0px 35%;
+    text-align: center;
+    overflow: hidden;
+    font-size: 110%;
+    position: relative;
+    font-family: Satisfy, cursive;
+   color: rgb(223, 68, 143);
+   text-shadow: 0.02em 0.02em 0 Brown, 0 0 0.5em violet;
+    
+    
+    }
+    .container__text__star span {
+     font-size: 0.8rem;
+     color: #f015e1;
+     margin: -5px 0 20px;
+     text-align: center;
+    }
+    .first_p {
+     font-size: 1.5rem;
+     text-align:justify
+    }
+    .second_p {
+       font-size: 1.3rem;
+       text-align: left;
+      }
+
+</style>
 <body>
-    <div class="container h-100">
+    <div class="container" id="wrapper">
         <br>
-        <h1>Recipe Finder</h1>
+        <h1 class="heading">Recipe Finder</h1>
         <hr>
         <br>
-        <div>
-            <div class="container-sm">
-                <div class="row">
-                  <div class="col">
-                    <a href="{{ url_for('start') }}" class="btn btn-primary btn-block">Click here to search recipes to cook based on preferences</a>
-                  </div>
-                </div>
-            </div>
-        </div>
+     
+     <div class="container_img">
+      <img
+      src="https://media-cdn.tripadvisor.com/media/photo-p/1b/e6/f4/6b/the-foodie-works-dishes.jpg"
+      alt="Foodie AI" />
+  
+  
+     </div>
+  
+     <div class="container__text">
+      <h1>Hello Foodie 😊</h1>
+      <div class="container__text__star">
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+      </div>
+  
+      <p class="first_p">
+          Whatever your palete craves today
+      </p>
+      <p class="second_p">
+          
+           we got you covered 😉.
+      </p>
+      
+      <div class="btn_position"> 
+         
+          <a class="btn" href="{{ url_for('start') }}">Get Started</a>
+      
+      </div>
+      
+     </div>
     </div>
-</body>
-</html>
+  
+    
+  
+  
+   </body>

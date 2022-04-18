@@ -15,6 +15,29 @@
 <body>
 
     <style>
+        
+        body {
+        background-color: #f4c1d3;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        }
+
+        .query {
+        color: rgb(48, 2, 49);
+        text-align:center;
+        margin: -5px 0 10px;
+        /* margin-left: 40px; */
+        }
+
+        .heading {
+        margin-left: 40px; 
+        font-size: 400%;
+        text-align: center;
+        margin: -15px 0 0px;
+
+        }   
         .mul-select{
             width: 100%;
         }
@@ -24,11 +47,11 @@
     </style>
     <div class="container h-100">
         <br>
-        <h1>Recipe Finder</h1>
+        <h1 class="heading">Recipe Finder</h1>
         <hr>
         <br>
         <div>
-            <h3>Do you want to search by ingredient?</h3>
+            <h3 class="query">Do you want to search by ingredient?</h3>
             
             <div>
                 <div class="row">

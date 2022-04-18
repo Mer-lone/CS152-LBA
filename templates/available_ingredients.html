@@ -18,17 +18,39 @@
         .mul-select{
             width: 100%;
         }
-        body{
-            overflow: hidden;
+        
+        body {
+        overflow: hidden;
+        background-color: #ebcfd9;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
         }
+
+        .query {
+        color: rgb(48, 2, 49);
+        text-align:center;
+        margin: -5px 0 10px;
+        }
+
+        .heading {
+        margin-left: 40px; 
+        font-size: 400%;
+        text-align: center;
+        margin: -15px 0 0px;
+
+        }   
+        
+        
     </style>
     <div class="container h-100">
         <br>
-        <h1>Recipe Finder</h1>
+        <h1 class="heading">Recipe Finder</h1>
         <hr>
         <br>
         <div>
-            <h3>Select all ingredients you have:</h3>
+            <h3 class="query">Select all ingredients you have:</h3>
             <form method="POST" action="{{ url_for('store_post', type='list') }}">
                 <input type="hidden" class="form-control" name="askable" value="available_ingredients">
                 <div class="form-group">
@@ -40,6 +62,7 @@
                 </div> 
                 <br>
                 <div>
+                    
                     <button type="submit" class="btn btn-danger mb-3">Submit</button>
                 </div>
             </form>

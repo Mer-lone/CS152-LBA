@@ -12,9 +12,183 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 </head>
+<style>
+    body {
+        overflow: visible;
+        background-color: #ebcfd9;
+        font-family: Arial, Helvetica, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        }
+        .hack {
+            color: #ebcfd9;
+        }
+        .query {
+        color: rgb(48, 2, 49);
+        text-align:center;
+        margin: -5px 0 10px;
+        /* margin-left: 40px; */
+        }
+
+        .heading {
+        margin-left: 40px; 
+        border-top: 100px;
+        font-size: 300%;
+        text-align: center;
+        margin: -15px 0 0px;
+
+        }
+        
+        .card-link {
+	position: relative;
+	display: block;
+	margin: auto;
+	padding-right: 2rem;
+	padding-left: 2rem;
+	font-size: 1rem;
+	font-weight: 900;
+	line-height: 4rem;
+	text-transform: uppercase;
+	letter-spacing: 6px;
+	color: #011c37;
+	background-color: rgba(41, 255, 106, 0);
+	background-image: linear-gradient(150deg, rgba(41, 255, 106, 0.2), rgba(41, 255, 106, 0.1));
+	background-size: calc(100% - 15px) calc(100% - 15px);
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: pointer;
+	user-select: none;
+	box-shadow: 0 0 0 1px rgba(41, 255, 106, 0.1), inset 0 0 0 1px rgba(41, 255, 106, 0.1);
+	transform: translateZ(0);
+	transition: transform 0.1s,
+  
+}
+
+.card-link:hover {
+	padding-right: calc( 2rem - 10px);
+	padding-left: calc( 2rem - 10px);
+	background-size: calc(100%) calc(100%);
+	line-height: calc( 4rem - 15px);
+	background-color: #29ff6a;
+	box-shadow: 0 0 15px 1px rgba(41, 255, 106, 0.4), inset 0 0 0 1px #29ff6a;
+	transition: transform 0.1s,
+ 
+}
+
+.card-link:active {
+	transform: scale(0.9);
+}
+
+.card-link:before,
+.card-link:after
+ {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 4px;
+	width: 4px;
+	background-color: #29FF6A;
+	animation-name: comet;
+	animation-iteration-count: infinite;
+	animation-play-state: running;
+	animation-timing-function: linear;
+	animation-delay: -0.3;
+	border-radius: 50%;
+	opacity: 1;
+	transform: translateX(-50%) translateY(-50%) scale(1);
+	transition: all 4s;
+}
+
+.card-link:before {
+	animation-duration: 2s;
+}
+
+.card-link:after {
+	animation-duration: 2.5s;
+}
+
+.card-link:hover:before,
+.card-link:hover:after {
+	opacity: 0;
+	filter: blur(2px);
+	transform: translateX(-50%) translateY(-50%) scale(2);
+	box-shadow: 0 0 15px 1px #29FF6A, 0 0 2px rgba(41, 255, 106, 0.7), 0 0 2px rgba(41, 255, 106, 0.5), 0 0 2px rgba(41, 255, 106, 0.3), 0 0 1px rgba(41, 255, 106, 0.25);
+	transition: all 0.7s;
+}
+
+@keyframes card-link {
+	0% {
+		top: 0;
+		left: 0;
+		box-shadow: 0 0 15px 1px #29FF6A, 0 0 2px rgba(41, 255, 106, 0.7), 0 0 2px rgba(41, 255, 106, 0.5), 0 0 2px rgba(41, 255, 106, 0.3), 0 0 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-in;
+	}
+
+	15% {
+		top: 0;
+		left: 50%;
+		box-shadow: 0 0 15px 1px #29FF6A, -4px 0 2px rgba(41, 255, 106, 0.7), -8px 0 2px rgba(41, 255, 106, 0.5), -12px 0 2px rgba(41, 255, 106, 0.3), -14px 0 1px -1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-out;
+	}
+
+	30% {
+		top: 0;
+		left: 100%;
+		box-shadow: 0 0 15px 1px #29FF6A, 0 0 2px rgba(41, 255, 106, 0.7), 0 0 2px rgba(41, 255, 106, 0.5), 0 0 2px rgba(41, 255, 106, 0.3), 0 0 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-in;
+	}
+
+	40% {
+		top: 50%;
+		left: 100%;
+		box-shadow: 0 0 15px 1px #29FF6A, 0 -4px 2px rgba(41, 255, 106, 0.7), 0 -8px 2px rgba(41, 255, 106, 0.5), 0 -12px 2px rgba(41, 255, 106, 0.3), 0 -14px 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-out;
+	}
+
+	50% {
+		top: 100%;
+		left: 100%;
+		box-shadow: 0 0 15px 1px #29FF6A, 0 0 2px rgba(41, 255, 106, 0.7), 0 0 2px rgba(41, 255, 106, 0.5), 0 0 2px rgba(41, 255, 106, 0.3), 0 0 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-in;
+	}
+
+	65% {
+		top: 100%;
+		left: 50%;
+		box-shadow: 0 0 15px 1px #29FF6A, 4px 0 2px rgba(41, 255, 106, 0.7), 8px 0 2px rgba(41, 255, 106, 0.5), 12px 0 2px rgba(41, 255, 106, 0.3), 14px 0 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-out;
+	}
+
+	80% {
+		top: 100%;
+		left: 0;
+		box-shadow: 0 0 15px 1px #29FF6A, 0 0 2px rgba(41, 255, 106, 0.7), 0 0 2px rgba(41, 255, 106, 0.5), 0 0 2px rgba(41, 255, 106, 0.3), 0 0 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-in;
+	}
+
+	90% {
+		top: 50%;
+		left: 0;
+		box-shadow: 0 0 15px 1px #29FF6A, 0 4px 2px rgba(41, 255, 106, 0.7), 0 8px 2px rgba(41, 255, 106, 0.5), 0 12px 2px rgba(41, 255, 106, 0.3), 0 14px 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-out;
+	}
+
+	100% {
+		top: 0;
+		left: 0;
+		box-shadow: 0 0 15px 1px #29FF6A, 0 0 2px rgba(41, 255, 106, 0.7), 0 0 2px rgba(41, 255, 106, 0.5), 0 0 2px rgba(41, 255, 106, 0.3), 0 0 1px rgba(41, 255, 106, 0.25);
+		animation-timing-function: ease-in;
+	}
+}
+        
+        
+</style>
 <body>
     <div class="container h-100">
-        <h1>Results</h1>
+        <h1 class="hack">   bbb   </h1>
+        <h1 class="heading">Results</h1>
         <a href="{{ url_for('index') }}" class="btn btn-primary">Search again</a>
         {% if recipes == [] %}
             <h3>Sorry, we don't have a recipe tailored to your exquisite taste :(</h3>
@@ -28,7 +202,7 @@
                 <img src="https://spoonacular.com/recipeImages/{{ rec['id'] }}-556x370.jpg" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ rec['title'] }}</h5>
-                    <a href="{{ rec['url'] }}" class="card-link">Link to recipe</a>
+                    <a href="{{ rec['url'] }}" class="card-link">Recipe</a>
                 </div>
               </div>
             </div>
