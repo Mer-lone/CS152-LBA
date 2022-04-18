@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request,  redirect, url_for
 
+# taken from https://github.com/yuce/pyswip/issues/3
+# pyswip has a problem of threading when using flask
 import pyswip, ctypes
 import pandas as pd
 
@@ -34,64 +36,104 @@ class PrologMT(pyswip.Prolog):
 
 prolog = PrologMT()
 
-prolog.assertz("ingredient(X,Y):- false")
-prolog.assertz("greater_than(X, Y) :- X @> Y")
-
-recipes_df = pd.read_csv("recipes.csv")
-
-def clean_alt_list(list_):
-    list_ = list_.replace('\"', '\'')
-    return list_
-
-recipes_df["title"] = recipes_df["title"].apply(clean_alt_list)
-
-recipes_df["ingredients_ids"] = recipes_df["ingredients_ids"].apply(eval)
-recipes_df["ingredients_names"] = recipes_df["ingredients_names"].apply(eval)
-
-
-ingredients = {}
-
-for index, row in recipes_df.iterrows():
-    line = "recipe(" + str(row["id"]) + ",\"" + str(row["title"]) + "\",\"" + str(row["url"]) + "\"," + str(row["minutes"]) + "," +str(row["calories"])+"):-"
-    
-    line += "time(X), greater_than(X, "+str(row["minutes"])+"),"
-    line += "calories(Y), greater_than(Y, "+str(row["calories"])+"),"
-                                                
-    for i in range(len(row["ingredients_ids"])):
-        ingredients[row["ingredients_ids"][i]] = str(row["ingredients_names"][i])
-        line += "ingredient("+ str(row["ingredients_ids"][i]) + ")"
-        if i < len(row["ingredients_ids"]) - 1:
-            line += ", "
-            
-    prolog.assertz(line)
+prolog.consult("KB.pl")
 
 app = Flask(__name__)
 
+# get csv file with recipes to create the menu options
+recipes_df = pd.read_csv("recipes.csv")
+
+# transform the columns into lists
+recipes_df["ingredients_names"] = recipes_df["ingredients_names"].apply(eval)
+recipes_df["diets"] = recipes_df["diets"].apply(eval)
+recipes_df["cuisines"] = recipes_df["cuisines"].apply(eval)
+recipes_df["dishTypes"] = recipes_df["dishTypes"].apply(eval)
+
+# create list for menu, some options can be none
+ingredients = []
+diets = ['none']
+cuisines = ['none']
+dishTypes = ['none']
+
+# collect all possible values for each
+for index, row in recipes_df.iterrows():
+    ingredients.extend(row['ingredients_names'])
+    diets.extend(row['diets'])
+    cuisines.extend(row['cuisines'])
+    dishTypes.extend(row['dishTypes'])
+    
+# transform into a set as we want unique options
+ingredients = set(ingredients)
+diets = set(diets)
+cuisines = set(cuisines)
+dishTypes = set(dishTypes)
+
+# alphabetical order
+ingredients = list(ingredients)
+diets = list(diets)
+cuisines = list(cuisines)
+dishTypes = list(dishTypes)
+
+ingredients.sort()
+diets.sort()
+cuisines.sort()
+dishTypes.sort()
+
+def get_question():
+    prolog.retractall("question(_)")
+    recipes = []
+    for soln in prolog.query("recipe(Id, Title, Url)"):
+        recipe = {"id":soln["Id"], "title":soln["Title"].decode(), "url":soln["Url"].decode()}
+        recipes.append(recipe)
+
+    questions = [s for s in prolog.query("question(P).", maxresult= 1)]
+
+    if not questions:
+        return "results.html", recipes
+    return questions[0]['P'], recipes
+
 @app.route('/')
 def index():
-    prolog.query("retractall(ingredient(_))")
-    prolog.query("retractall(time(_))")
-    prolog.query("retractall(calories(_))")
-    return render_template('search_recipes.html', ingredients = ingredients)
+    return render_template('index.html')
+
+@app.route('/start')
+def start():
+    prolog.retractall("known(_,_,_)")
+
+    page, recipes = get_question()
+    print(page)
+
+    return render_template(page, recipes = recipes, ingredients = ingredients, diets = diets, cuisines = cuisines, dishtypes = dishTypes)
+
+@app.route('/store/<askable>/<value>', methods = ['GET'])
+def store(askable,value):
+    prolog.assertz("known(yes, " + askable + ", " + value + ")")
+
+    page, recipes = get_question()
+
+    return render_template(page, recipes = recipes, ingredients = ingredients, diets = diets, cuisines = cuisines, dishtypes = dishTypes)
+
+@app.route('/store/<type>', methods = ['POST'])
+def store_post(type):
+    askable = request.form['askable']
+    if type == "list":
+        value_list = request.form.getlist('value[]')
+        value = "["+", ".join(f"'{w}'" for w in value_list)+"]"
+    elif type == "text":
+        value = request.form['value']
+        value = "'"+str(value)+"'"
+    else:
+        value = request.form['value']
+
+    prolog.assertz("known(yes, " + askable + ", " + value + ")")
+
+    page, recipes = get_question()
+
+    return render_template(page, recipes = recipes, ingredients = ingredients, diets = diets, cuisines = cuisines, dishtypes = dishTypes)
 
 @app.route('/results', methods = ['POST'])
 def results():
-    available_ingredients = request.form.getlist('ingredients[]')
-    time = request.form['time']
-    calories = request.form['calories']
-
-    prolog.assertz('time('+ time +')')
-    prolog.assertz('calories('+ calories +')')
-
-    for ing in available_ingredients:
-        prolog.assertz('ingredient(' + ing + ')')
-
-    recipes = []
-    for soln in prolog.query("recipe(X,Y,Z,K,L)"):
-        recipe = {"id":soln["X"], "title":soln["Y"], "url":soln["Z"], "minutes":soln["K"], "calories":soln["L"]}
-        recipes.append(recipe)
-
-    return render_template('result_recipes.html', recipes = recipes)
+    return render_template('result_recipes.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

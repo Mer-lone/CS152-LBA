@@ -3828,6 +3828,17 @@ max_price(X) :- ask(max_price, X).
 less_or_equal(X,Y) :- X @=< Y.
 all_first_in_second(List1, List2) :- forall(member(Element,List2), member(Element,List1)).
 
+% pages
+
+page(search, 'search.html').
+page(available_ingredients, 'available_ingredients.html').
+page(max_time, 'max_time.html').
+page(max_calories, 'max_calories.html').
+page(cuisine, 'cuisine.html').
+page(diet, 'diet.html').
+page(dishType, 'dishType.html').
+page(max_price, 'max_price.html').
+
 % Asking clauses taken from class: CS152 Session 21 - [12.2] Prolog Applications to AI - Expert Systems
 
 % if search by ingredients is false, search by type is true
@@ -3853,6 +3864,6 @@ V \== V2,
 !, fail.
 
 ask(A, V):-
-read_py(A,V,Y), % get the answer
-assertz(known(Y, A, V)), % remember it
-Y == yes.	% succeed or fail
+page(A, P),
+assertz(question(P)),
+!, fail.

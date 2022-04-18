@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder - max_calories</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container h-100">
+        <br>
+        <h1>Recipe Finder</h1>
+        <hr>
+        <br>
+        <div>
+            <h3>What is the maximum amount of calories you want to consume?</h3>
+            <form method="POST" action="{{ url_for('store_post', type='normal') }}">
+                <input type="hidden" class="form-control" name="askable" value="max_calories">
+                <input type="number" class="form-control" name="value">
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
